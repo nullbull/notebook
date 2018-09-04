@@ -54,5 +54,23 @@ authc匹配的是用户必须登陆
                         `<h2 th:text="${session.currentUser==null} ? '11' : ${session.currentUser.getUserName()}"></h2>`  
 
 8. 用反射实现从excel读取的数据转换成实体类
-9. 
 
+9. [Mybatis 配置文件 useGeneratedKeys 参数](https://blog.csdn.net/kleguan/article/details/74058482)
+
+   添加这个参数，会让实现自增key，并且将key的属性set到入参
+
+10. ```java
+    String regx = "(\\{\\s*\")(" +  keyWord + ")(\"\\s*:\\s*\"*)(\\d*)(\"*\\s*\\})";
+    ```
+
+写了一个正则表达式，匹配 {"keyWord" : 123} 或 {"keyWord" : "123"}
+
+匹配{ 需要 //{
+
+匹配 空格 需要 //s*
+
+分组用()把正则表达式包起来，用match.group(0)获取全部匹配的
+
+match.group(1)获取第一个括号匹配的
+
+需要用match.find()判断是否匹配才能获取group要不然会报错

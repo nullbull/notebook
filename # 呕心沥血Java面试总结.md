@@ -5,10 +5,13 @@
 
 ### 基础篇
 1.  String为什么要设计成Final
-2. String StringBuffer StringBulider的区别      
-3. 你能给我写一个final对象吗 
-4. 重写hashcode()方法
-### 集合篇
+2.  String StringBuffer StringBulider的区别      
+3.  你能给我写一个final对象吗 
+4.  重写hashcode()方法
+5.  java [序列化](https://www.cnblogs.com/xdp-gacl/p/3777987.html)
+6.  你能给我写个单例模式吗？你这个如果要是被反射或者序列化破坏单例该怎么办？
+7.  Java io[流体系结构](https://blog.csdn.net/kingdvc/article/details/42488517)
+8.  [BIO、NIO和AIO的区别](https://blog.csdn.net/u013851082/article/details/53942947/)
 1. HashMap的实现原理
 2. HashMap产生冲突了会怎么样
 3. HashMap在多线程下会出现什么问题，为什么会这样
@@ -59,14 +62,13 @@
 12. 可达性分析算法
 
 ### [类加载](https://www.cnblogs.com/aspirant/p/7200523.html)
-1. 双亲委派模型及为什么要用双亲委派模型
-2. 什么是类加载器    
-3. 类加载器与类的”相同“判断   
-4. 类加载器种类 
-5. 类加载过程   
-6. 自定义类加载器
-7. 反射用过么，私有成员变量和私有方法能被反射出来吗
-8. 怎样获取一个类的私有方法和私有变量
+1. [双亲委派模型及为什么要用双亲委派模型](https://www.cnblogs.com/wxd0108/p/6681618.html)
+2. 类加载器与类的”相同“判断   
+3. 类加载器种类 
+4. 类加载过程   
+5. 自定义类加载器
+6. 反射用过么，私有成员变量和私有方法能被反射出来吗
+7. 怎样获取一个类的私有方法和私有变量
 
 ### Spring篇
 1. [SpringIOC初始化过程](https://blog.csdn.net/zqh994828/article/details/78452421)
@@ -90,10 +92,20 @@
 6. 聚簇索引和非聚簇索引
 7. [为什么索引要用b+树而不是红黑树，hash表](https://www.cnblogs.com/wade-luffy/p/6292784.html)
 8. 你都是怎么优化数据库的
+9. [Repeateable-read是怎么解决不可重复读的？幻读是怎么解决的](https://www.cnblogs.com/YFYkuner/p/5178684.html)
+10. 数据库的三级封锁协议
 
+### 计算机网络
+1. TCP的三次握手和四次握手
+2. TCP/IP协议 五层协议的对象头的变化
+3. [GET和POST的区别](https://www.cnblogs.com/logsharing/p/8448446.html)
+4. [当你输入一个网址/点击一个链接，发生了什么？](https://blog.csdn.net/Random__Walker/article/details/52040146)
+5. 拥塞控制
 
+### 手撕算法
+1. [十道海量数据处理面试题与十个方法大总结](https://blog.csdn.net/v_JULY_v/article/details/6279498)
 
-一些比较好的博客推荐给大家
+### 一些比较好的博客推荐给大家
 
 1. [大佬1](https://github.com/frank-lam/2019_campus_apply)
 2.  [大佬2](https://github.com/nullbull/architect-awesome)
