@@ -12,18 +12,27 @@
 6.  你能给我写个单例模式吗？你这个如果要是被反射或者序列化破坏单例该怎么办？
 7.  Java io[流体系结构](https://blog.csdn.net/kingdvc/article/details/42488517)
 8.  [BIO、NIO和AIO的区别](https://blog.csdn.net/u013851082/article/details/53942947/)
-1. HashMap的实现原理
-2. HashMap产生冲突了会怎么样
-3. HashMap在多线程下会出现什么问题，为什么会这样
-4. HashMap为什么要采用红黑树，你能给我讲讲红黑树的特点吗
-5. ConcurrentHashMap的实现原理
-6. ConcurrentHashMap JDK1.7和1.8有什么区别
-7. ConcurrenthashMap用到了哪些锁
-8. ArrayList和LinkedList的区别，分别在什么场景下使用
-9. ArrayList的扩容
-10. Vector为什么是线程安全的
-11. TreeSet的底层实现
-12. 一些Collection的方法
+9.  HashMap的实现原理
+10.  HashMap产生冲突了会怎么样
+11.  HashMap在多线程下会出现什么问题，为什么会这样
+12.  HashMap为什么要采用红黑树，你能给我讲讲红黑树的特点吗
+13.  ConcurrentHashMap的实现原理
+14.  ConcurrentHashMap JDK1.7和1.8有什么区别
+15.  ConcurrenthashMap用到了哪些锁
+16.  ArrayList和LinkedList的区别，分别在什么场景下使用
+17.  ArrayList的扩容
+18.  Vector为什么是线程安全的
+19.  TreeSet的底层实现
+20.  一些Collection的方法
+21.  [Java反射的原理](https://blog.csdn.net/TellH/article/details/70997628)
+22.  Servlet，filter
+23.  interface里面接口用什么进行修饰
+24.  为什么要先加载父类构造器，如果父类构造器没有无参构造器会怎么办
+25.  [接口和抽象类的区别](http://www.importnew.com/12399.html)
+26.  idea 快捷键
+27.  git操作
+28.  maven生命周期，install和deploy的区别
+29.  
 
 ### 并发篇
 1. [sychronizated 底层实现](https://blog.csdn.net/javazejian/article/details/72828483)
@@ -58,7 +67,7 @@
 8. 怎么判定一个对象的内存可以被回收了
 9. 哪些对象可以作为CGRoots
 10. [什么情况下会发生内存泄露](https://blog.csdn.net/morningsun1990/article/details/25456707)
-11. 强引用，弱引用，虚引用
+11. 强引用，软引用，弱引用，虚引用
 12. 可达性分析算法
 
 ### [类加载](https://www.cnblogs.com/aspirant/p/7200523.html)
@@ -94,13 +103,32 @@
 8. 你都是怎么优化数据库的
 9. [Repeateable-read是怎么解决不可重复读的？幻读是怎么解决的](https://www.cnblogs.com/YFYkuner/p/5178684.html)
 10. 数据库的三级封锁协议
+11. [innodb 和 myisam 区别](https://www.cnblogs.com/changna1314/p/6878900.html)
 
 ### 计算机网络
 1. TCP的三次握手和四次握手
 2. TCP/IP协议 五层协议的对象头的变化
 3. [GET和POST的区别](https://www.cnblogs.com/logsharing/p/8448446.html)
 4. [当你输入一个网址/点击一个链接，发生了什么？](https://blog.csdn.net/Random__Walker/article/details/52040146)
-5. 拥塞控制
+5. [拥塞控制](https://blog.csdn.net/u010796790/article/details/52853539)
+6. [UDP和TCP区别](https://www.cnblogs.com/xiaomayizoe/p/5258754.html)
+7. cookie和session[区别](https://www.cnblogs.com/zlw-xf/p/8001383.html)
+8. HTTP HTTPS的区别
+## 操作系统
+1. 进程通信方式
+2. 线程进程区别
+3. 进程通信方式；
+4. 死锁（代码实现）；
+5. 常用linux命令；
+6. 作业调度方式；
+7. LRU算法实现
+### 其他
+
+1. maven[生命周期](https://www.cnblogs.com/EasonJim/p/6816340.html)
+2. 常用的idea快捷键
+3. jsp内置对象
+4. http[状态码](http://tool.oschina.net/commons?type=5)
+5. http内容
 
 ### 手撕算法
 1. [十道海量数据处理面试题与十个方法大总结](https://blog.csdn.net/v_JULY_v/article/details/6279498)

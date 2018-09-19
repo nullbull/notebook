@@ -14,7 +14,7 @@
 
 6. 启动kafka  
 
-   `./bin/kafka-server-start.sh  -daemon config/server.properties`  一定要加上 -daemon，加上意味着程序在后台运行
+   `./bin/kafka-server-start.sh  -daemon config/server.properties`  一定要加上 -daemon，加上意味着程序在后台运行a
 
 7. 创建一个名为test 的topic 
 
@@ -124,4 +124,4 @@
 
 ![1536028236606](C:\Users\11291\AppData\Local\Temp\1536028236606.png)
 
-![1536029189814](C:\Users\11291\AppData\Local\Temp\1536029189814.png)
+![1536029401134](C:\Users\11291\AppData\Local\Temp\1536029401134.png)
