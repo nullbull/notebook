@@ -53,3 +53,11 @@
    ```
 
 5. 写了一个工具类，可以把一些常用类型如果为null，封装成对应的初始值，但是忘了一点switch要break
+
+6. 使用Mybatis Example 返回的List 一定不为null,需要判断其是否为空
+
+7. 数据库中desc describe 这些字段都是 数据库保存的
+
+8. mybatis 没使用 驼峰命名法
+
+9. 阿里云开放端口，使用外部连接之后，在linux本机就没法使用producer生产消息了

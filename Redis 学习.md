@@ -33,8 +33,8 @@
 0. key -> field -> value
 	-> field -> value
 	-> field -> value	
-		一个key 可以对应多个field 
-		类似List<Map<String, String>> 
+	​	一个key 可以对应多个field 
+	​	类似List<Map<String, String>> 
 25. 设置值 hset key fiel_key value
 26. 获取值 hget key fiel_key
 27. 删除值 Hdel key fiel_key
@@ -56,16 +56,16 @@
 37. 从左边插入数据 lpush key value
 38. 向某个元素前后插入 linsert key before|after ? value
 39. 查找指定范围内的元素列表 lrange key start end
-		获取全部可以这样： lrange key 0  -1
+	​	获取全部可以这样： lrange key 0  -1
 40. 获取指定下标的元素 lindex key index
 41. 获取列表的长度 llend key
 42. 左侧删除 lpop key
 43. 右侧删除 rpop key
 44. 删除指定元素 lrem key count value
-		这个指令会找到与value的值然后删除，
-		如果count>0，从左向右删除count个
-		count=0， 全部删除
-		count<0,从右向左删除
+	​	这个指令会找到与value的值然后删除，
+	​	如果count>0，从左向右删除count个
+	​	count=0， 全部删除
+	​	count<0,从右向左删除
 45. 只保留范围内的值 ltrim key start end
 46. 修改指定位置的元素lset key index newValue
 47. 
@@ -156,11 +156,11 @@ setbit unique:users:2018-04-21 0 1
 
 ##Redis客户端
 1.怎么在windows使用虚拟机中的redis
-	1. 首先要修改redis 的配置文件，找到bind节点，修改bind的节点如下：
-	
-	　　bind的意思是绑定哪个ip地址能够访问服务 ，简单说bind指定的ip才可以访问redis server。
-	　　ps： bind 127.0.0.1 //指定只有本机才能访问redis服务器
-	
+​	1. 首先要修改redis 的配置文件，找到bind节点，修改bind的节点如下：
+​	
+​	　　bind的意思是绑定哪个ip地址能够访问服务 ，简单说bind指定的ip才可以访问redis server。
+​	　　ps： bind 127.0.0.1 //指定只有本机才能访问redis服务器
+​	
 	　　　　 bind 0.0.0.0    // 所有的机子都可以访问到redis server
 	
 	      　　  bind  192.168.1.253  //只有这个ip的机子才可以访问redis server
@@ -278,5 +278,53 @@ Redis有最大缓存，但是缓冲区不受到限制，但是超过限制可能
 1.   引入两个配置文件要加上 ignore-unresolvable="true"  <context:property-placeholder ignore-unresolvable="true" location="classpath:redis.properties" />
 2.   Spring使用Jedis要注意版本号问题，否则会出现bean无法被实例化
 
-
 ​	
+
+
+
+
+
+Redis 数据结构
+
+1. SDS简单动态字符串
+
+   struct sdshdr {
+
+   ​	int len;//记录已使用的长度
+
+   ​	int free;//记录未使用的长度
+
+   ​	char buf[]//保存字符串
+
+   }
+
+   优点:
+
+   1. 可以直接获取字符串的长度
+
+    	2. 可以杜绝缓冲区溢出（可能会把别的字符串覆盖掉）
+    	3. 可以不用一直申请内存(小于1M，free = len，大于1M， 一共free=30M + len + 1byte)
+
+2. List 和ListNode 是一个双向链表
+
+3. 字典dictht 
+
+   typedef struct dictht {
+
+   ​	  dictEntry ** table //hash数组
+
+   ​	unsigned long size //hash表大小
+
+   ​	unsigned long sizemask //用于计算索引值
+
+   ​	unsigned long used //已经使用的数量
+
+   ​	}dictht
+
+   ![1537668735480](C:\Users\11291\Documents\MarkDown\1537668735480.png)
+
+
+
+4. skiplist 跳跃表 最好OlogN最坏 On的查询速度
+5. intset整型集合
+6. 压缩列表，当list或hash元素为较短的string或int时绘彩通这个数据结构

@@ -97,7 +97,7 @@ Class Name = Shape.class
 下面是一个具体的例子
 
 
-		
+​		
 
 ``` css
 package Java.RTTI;
@@ -174,8 +174,9 @@ package Java.RTTI;
 		     consumer(proxy);
 		    }
 		}
-		
-		
+
+
+​		
 
 6. 所有的类都是在对其第一次使用时，动态的加载到JVM中的。当程序创建第一个对类的静态成员引用时，就会加载这个类，这也证明构造器也是类的静态方法。
 7. Class<?> 优于Class
@@ -254,7 +255,7 @@ public class BasicGenerator<T>  implements Generator<T>{
 15.   <?>意味着持有某种特定的类型，所以也只能用get()方法，只能用Object来接收
 16. 任何带有泛型类型参数的转型或instanceof不会产生任何效果
 17. 古怪的循环泛型 CRG
-   Class Subtype extends BasicHolder< Subtype >
+      Class Subtype extends BasicHolder< Subtype >
 基类用导出类代替其参数，这就让基类变成了一个模板，既能get确定的子类，又能set确定的子类、
 18. 自限定 SelfBounded<T extends SelfBounded< T > >
 19. 在编译期就检查出容器内插入的类不适合 Collections.checkedList(new ArrayList<T>(), T.class);
@@ -298,10 +299,9 @@ Arrays.sort(a, TComparator);
 3. HashTable 和currentHashMap都是线程安全的，也就是说不会发生两个线程同时修改，因为前者采用synchroinized，所以性能低
 4. 对long 和double的操作不是原子操作
 5. Semaphore 类可以定义 资源个数
-	1. semaphore.acquire 确保可用资源，资源减一
-	2. semaphore.release 释放该资源，可用资源加一
+  1. semaphore.acquire 确保可用资源，资源减一
+  2. semaphore.release 释放该资源，可用资源加一
 
-	
 
 ``` java
 package Runtime.NO1;
@@ -432,7 +432,7 @@ synchroized
 		    }
 		}
 
-10. 上面的也可以使用Copy什OnWriteArrayList()，适用于读次数多，写较少的情况
+10. 上面的也可以使用CopyOnWriteArrayList()，适用于读次数多，写较少的情况
 11. wait()使进程进入等待序列，notify()激活进程
 12. 用while循环，不能用if
  - 存在循环
@@ -481,7 +481,7 @@ synchroized
 31. 异常不容易捕获，需要特殊处理
 32. 两种线程的异常处理方式
 
-``` stylus
+``` java
 class ExceptionThread implements Runnable {
 
 
@@ -524,7 +524,7 @@ public class CaptureUncaughtException {
 ```
 第二种
 
-``` stylus
+``` java
 public class SettingDefaultHandler {
     public static void main(String[] args) {
         Thread.setDefaultUncaughtExceptionHandler(
@@ -643,13 +643,13 @@ synchronized(class)
 24. CountDownLatch 的用法， 等待任务执行await() 等待 被等待任务 完成， 被等待的任务 完成一次调用一次countDown()，让CountDownLatch的值减一，等到为0的时候，开始执行await()的线程。
 25. CyclicBarrier 的用法， 设置 个数，每次await()计数减一，当容量为0时，并发执行，在此之前都不执行。
 26. 区别在于CountDownLatch 只能用一次， CyclicBarrier可以用多次。当计数值为0时，自动开始所有等待的任务。
-		package Runtime.Thread;
-		
-		import java.util.ArrayList;
-		import java.util.List;
-		import java.util.Random;
-		import java.util.concurrent.*;
-		
+	​	package Runtime.Thread;
+	​	
+	​	import java.util.ArrayList;
+	​	import java.util.List;
+	​	import java.util.Random;
+	​	import java.util.concurrent.*;
+	​	
 		class Horse implements Runnable{
 		
 		    private static int counter = 0;
@@ -816,154 +816,160 @@ synchronized(class)
 		}
 
 
-	
+​	
 1. DelayedQueue 是一个无界的BlockingQueue， 是一个优先级队列，队列里面的元素 也应是任务，继承Delayed， 实现getDelay()和comparedTo()
-		
-1.	` trigger = System.nanoTime() + NANOSECONDS.convert(delta, MILLISECONDS);
-`将int转化为纳秒
+
+2. ` trigger = System.nanoTime() + NANOSECONDS.convert(delta, MILLISECONDS);
+    `将int转化为纳秒
+
 3. PriorityBlokingQueue,按照优先级 先后执行
+
 4. scheduledExecutor .schedule()执行一次任务 .scheduleAtFiedRate() 按照固定频率执行任务；
+
 5. Semaphore锁同时允许多个对象访问有限的对象
-		package Runtime.Thread;
-		
-		import java.util.ArrayList;
-		import java.util.List;
-		import java.util.concurrent.*;
-		
-		public class Pool<T> {
-		    private int size;
-		    private List<T> items = new ArrayList<>();
-		    private volatile boolean[] checkedOut;
-		    private Semaphore aviailable;
-		    public Pool(Class<T> tClass, int size) {
-		        this.size = size;
-		        checkedOut = new boolean[size];
-		        aviailable = new Semaphore(size, true);//初始话Semaphore
-		        for (int i = 0; i < size; i++)
-		            try {
-		                items.add(tClass.newInstance());
-		            } catch (IllegalAccessException e) {
-		                e.printStackTrace();
-		            } catch (InstantiationException e) {
-		                e.printStackTrace();
-		            }
-		    }
-		    public T checkOut() throws InterruptedException {
-		        aviailable.acquire();//占用一个资源
-		        return getItem();
-		    }
-		    public void checkIn(T x) {
-		        if(releaseItem(x))
-		            aviailable.release();//释放一个资源
-		    }
-		    public synchronized T getItem() {
-		        for(int i = 0; i < size; ++i) {
-		            if(!checkedOut[i]) {
-		                checkedOut[i] = true;
-		                return items.get(i);
-		            }
-		        }
-		        return null;
-		    }
-		    public synchronized boolean releaseItem(T item) {
-		        int index = items.indexOf(item);
-		        if(index == -1) return false;
-		        if(checkedOut[index]){
-		            checkedOut[index] = false;
-		            return true;
-		        }
-		        return false;
-		    }
-		
-		}
-		    class Fat {
-		        private volatile double d;
-		        private static int counter = 0;
-		        private final int id = counter++;
-		        public Fat() {
-		            for(int i = 1; i < 10000; i++) {
-		                d += (Math.PI + Math.E) / (double) i;
-		             }
-		        }
-		        public void operation() {
-		            System.out.println(this);
-		        }
-		
-		        @Override
-		        public String toString() {
-		            return "Fat: id: " + id;
-		        }
-		    }
-		    class CheckoutTask<T> implements Runnable{
-		
-		        private static int counter = 0;
-		        private final int id = counter++;
-		        private Pool<T> pool;
-		
-		        public CheckoutTask(Pool<T> pool) {
-		            this.pool = pool;
-		        }
-		
-		        @Override
-		        public void run() {
-		            try {
-		                T item = pool.checkOut();
-		                System.out.println(this + " check out " + item);
-		                TimeUnit.SECONDS.sleep(1);
-		                System.out.println(this + "checking in" + item);
-		                pool.checkIn(item);
-		            } catch (InterruptedException e) {
-		                e.printStackTrace();
-		            }
-		        }
-		
-		        @Override
-		        public String toString() {
-		            return "CheckoutTask id : " + id ;
-		        }
-		    }
-		    class Demo{
-		        final static int SIZE = 25;
-		        public static void main(String[] args) throws Exception {
-		            final Pool<Fat> pool = new Pool<>(Fat.class, SIZE);
-		            ExecutorService exe = Executors.newCachedThreadPool();
-		            for(int i = 0; i < SIZE; i++) {
-		                exe.execute(new CheckoutTask<Fat>(pool));
-		            }
-		            System.out.println("All CheckoutTasks created");
-		            List<Fat> list = new ArrayList<>();
-		            for(int i = 0; i < SIZE; i++) {
-		                Fat f = pool.checkOut();
-		                System.out.println(i + ": main() thread checked out ");
-		                f.operation();
-		                list.add(f);
-		            }
-		            Future<?> blocked = exe.submit(new Runnable() {
-		                @Override
-		                public void run() {
-		                    try{
-		                        pool.checkOut();
-		                    } catch (InterruptedException e) {
-		                        System.out.println("checkout()  Interrupted" );
-		                    }
-		                }
-		            });
-		            TimeUnit.SECONDS.sleep(2);
-		            blocked.cancel(true);
-		            System.out.println("Checking in objects in " + list);
-		            for(Fat f : list)
-		                pool.checkIn(f);
-		            for (Fat f : list)
-		                pool.checkIn(f);
-		            exe.shutdownNow();
-		        }
-		    }
-1. CopyOnWriteArraylist可以保证两个线程同时修改不会出错
-2. 有一个 holder List Exchanger<List<T>> exchanger. exchange(holder）传入这个方法重新赋值给holder， 另一个线程便可以同时进行holder.remove;
-3. 如果有对各Atomic对象，可能会被强制要求放弃这种用法，转而使用更加常规的互斥
+    package Runtime.Thread;
+    ​	
+    ​	import java.util.ArrayList;
+    ​	import java.util.List;
+    ​	import java.util.concurrent.*;
+    ​	
+    	public class Pool<T> {
+    	    private int size;
+    	    private List<T> items = new ArrayList<>();
+    	    private volatile boolean[] checkedOut;
+    	    private Semaphore aviailable;
+    	    public Pool(Class<T> tClass, int size) {
+    	        this.size = size;
+    	        checkedOut = new boolean[size];
+    	        aviailable = new Semaphore(size, true);//初始话Semaphore
+    	        for (int i = 0; i < size; i++)
+    	            try {
+    	                items.add(tClass.newInstance());
+    	            } catch (IllegalAccessException e) {
+    	                e.printStackTrace();
+    	            } catch (InstantiationException e) {
+    	                e.printStackTrace();
+    	            }
+    	    }
+    	    public T checkOut() throws InterruptedException {
+    	        aviailable.acquire();//占用一个资源
+    	        return getItem();
+    	    }
+    	    public void checkIn(T x) {
+    	        if(releaseItem(x))
+    	            aviailable.release();//释放一个资源
+    	    }
+    	    public synchronized T getItem() {
+    	        for(int i = 0; i < size; ++i) {
+    	            if(!checkedOut[i]) {
+    	                checkedOut[i] = true;
+    	                return items.get(i);
+    	            }
+    	        }
+    	        return null;
+    	    }
+    	    public synchronized boolean releaseItem(T item) {
+    	        int index = items.indexOf(item);
+    	        if(index == -1) return false;
+    	        if(checkedOut[index]){
+    	            checkedOut[index] = false;
+    	            return true;
+    	        }
+    	        return false;
+    	    }
+    	
+    	}
+    	    class Fat {
+    	        private volatile double d;
+    	        private static int counter = 0;
+    	        private final int id = counter++;
+    	        public Fat() {
+    	            for(int i = 1; i < 10000; i++) {
+    	                d += (Math.PI + Math.E) / (double) i;
+    	             }
+    	        }
+    	        public void operation() {
+    	            System.out.println(this);
+    	        }
+    	
+    	        @Override
+    	        public String toString() {
+    	            return "Fat: id: " + id;
+    	        }
+    	    }
+    	    class CheckoutTask<T> implements Runnable{
+    	
+    	        private static int counter = 0;
+    	        private final int id = counter++;
+    	        private Pool<T> pool;
+    	
+    	        public CheckoutTask(Pool<T> pool) {
+    	            this.pool = pool;
+    	        }
+    	
+    	        @Override
+    	        public void run() {
+    	            try {
+    	                T item = pool.checkOut();
+    	                System.out.println(this + " check out " + item);
+    	                TimeUnit.SECONDS.sleep(1);
+    	                System.out.println(this + "checking in" + item);
+    	                pool.checkIn(item);
+    	            } catch (InterruptedException e) {
+    	                e.printStackTrace();
+    	            }
+    	        }
+    	
+    	        @Override
+    	        public String toString() {
+    	            return "CheckoutTask id : " + id ;
+    	        }
+    	    }
+    	    class Demo{
+    	        final static int SIZE = 25;
+    	        public static void main(String[] args) throws Exception {
+    	            final Pool<Fat> pool = new Pool<>(Fat.class, SIZE);
+    	            ExecutorService exe = Executors.newCachedThreadPool();
+    	            for(int i = 0; i < SIZE; i++) {
+    	                exe.execute(new CheckoutTask<Fat>(pool));
+    	            }
+    	            System.out.println("All CheckoutTasks created");
+    	            List<Fat> list = new ArrayList<>();
+    	            for(int i = 0; i < SIZE; i++) {
+    	                Fat f = pool.checkOut();
+    	                System.out.println(i + ": main() thread checked out ");
+    	                f.operation();
+    	                list.add(f);
+    	            }
+    	            Future<?> blocked = exe.submit(new Runnable() {
+    	                @Override
+    	                public void run() {
+    	                    try{
+    	                        pool.checkOut();
+    	                    } catch (InterruptedException e) {
+    	                        System.out.println("checkout()  Interrupted" );
+    	                    }
+    	                }
+    	            });
+    	            TimeUnit.SECONDS.sleep(2);
+    	            blocked.cancel(true);
+    	            System.out.println("Checking in objects in " + list);
+    	            for(Fat f : list)
+    	                pool.checkIn(f);
+    	            for (Fat f : list)
+    	                pool.checkIn(f);
+    	            exe.shutdownNow();
+    	        }
+    	    }
+
+6. CopyOnWriteArraylist可以保证两个线程同时修改不会出错
+
+7. 有一个 holder List Exchanger<List<T>> exchanger. exchange(holder）传入这个方法重新赋值给holder， 另一个线程便可以同时进行holder.remove;
+
+8. 如果有对各Atomic对象，可能会被强制要求放弃这种用法，转而使用更加常规的互斥
 
 
-##枚举学习
+### 枚举学习
 
 1. 如果自定义自己的方法，必须在enum实例序列的最后一个添加分号；
 2. toString()方法可以调用name()方法来获取实例的名字。

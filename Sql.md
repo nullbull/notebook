@@ -111,6 +111,11 @@ SELECT id, STATUS, sub_status, create_time, end_time FROM employee_insurance WHE
 
 SELECT id, STATUS, sub_status, create_time, end_time FROM employee_insurance WHERE insurance_id IN(24, 8) AND id IN (SELECT employee_insurance_id FROM employee_insurance_children GROUP BY employee_insurance_id HAVING COUNT(*) > 1) ORDER BY id;
 
+排序
+
+select commodity_id, commodity_price, case when @prevRank = commodity_price then @rownum when @preRank := commodity_price
+ then @rownum :=@rownum +1 end AS rownum from sm_commodity a, (select @rownum := 0, @preRank := NULL) q order by commodity_price desc;
 
 
-git checkout -b dev-reim-20180817 origindev-reim-20180817
+
+select commodity_id, commodity_price, case when @prevRank = commodity_price then @rownum when @preRank := commodity_price then @rownum :=@rownum +1 end AS rownum from sm_commodity a, (select @rownum := 0, @preRank := NULL) q order by commodity_price desc;
