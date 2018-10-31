@@ -186,3 +186,21 @@
 
 
 
+ $ wget https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm
+ $ sudo rpm -Uvh erlang-solutions-1.0-1.noarch.rpm
+
+ $ sudo yum install erlang
+--------------------- 
+作者：MC-闰土 
+来源：CSDN 
+原文：https://blog.csdn.net/qq_22075041/article/details/78855708 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
+[BugFix] 小爱未解锁接收命令 10S后解锁仍操作成功
+
+MIUI-1452772
+
+```
+MIUI-1452772
+```
+
