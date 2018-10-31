@@ -127,4 +127,62 @@
    | Expires          | 实体主体过期的日期时间 |
    | Last-Modified    | 资源最后修改日期时间   |
 
+4. 字段详解
+
+   1. Accept 可以通知服务器，客户端可以接受的媒体类型 可以设置多种，可以设置权重 -q 0到1
+   2. Etag 服务器通过Etag来确定需要访问的资源
+
+### HTTPS
+
+1. HTTP的缺点
+   1. 通信使用明文，内容可能会被窃听
+   2. 不验证通信方的身份，可能遭遇伪装攻击
+   3. 无法验证报文的完整性，可能会被篡改
+
+2. HTTPS
+
+   1. 利用SSL协议，将HTTP内容封装起来，交给TCP进行传输
+
+   2. HTTPS过程
+
+      1. 客户端发送Client Hello 报文开始SSL通信
+
+      2. 当服务器可以进行SSL通信时，会返回Server Hello报文
+
+      3. 服务器发送Certificate报文，包含公开密钥
+
+      4. 最后发送Server Hello Done 报文 SSL握手结束
+
+      5. 客户端一Client Key Exchange 报文回应，使用公钥加密
+
+      6. 客户端继续发送Change Cipher Spec 报文，提醒服务器，之后按公钥加密
+
+      7. 客户端发送Finished报文，协商链接是否建立成功
+
+      8. 服务器发送Change Cipher Spec报文
+
+      9. 服务器同样发送Finished报文
+
+      10. 服务器和客户端Finished报文交换完毕后，SSL链接建立完成
+
+      11. 之后采用共享密钥加密发送内容
+
+          ![1540949386567](/home/justinniu/MarkDown/notebook/1540949386567.png)
+
+### Session和Cookie
+
+1. 服务器根据用户登陆信息为其生成Session，并把包含这个Session id的Cookie 发送给客户端
+2. 客户端以后在访问就会带着Cookie发送
+3. Cookie添加HttpOnly避免XSS攻击
+
+### HTTP攻击
+
+1. 主动攻击 SQL注入和OS命令注入
+
+2. 跨站脚本攻击和跨站点请求伪造，也就是利用钓鱼网站进行攻击
+
+
+
+
+
 
