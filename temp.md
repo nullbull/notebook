@@ -41,7 +41,13 @@ Signed-off-by: niuzhenhao <niuzhenhao@xiaomi.com>
 
 
 
+<<<<<<< HEAD
 
+=======
+缓存和Mysql的策略
+
+1. 读操作
+>>>>>>> ac7c1a9a1abc530c247e69236ab430433f6145ae
 
 SOA面向服务的架构
 
@@ -61,6 +67,7 @@ Host gerrit.pt.miui.com
     User niuzhenhao
 ```
 
+<<<<<<< HEAD
 
 
 ### ThreadLocal
@@ -74,4 +81,3 @@ ThreadLocalMap key是弱引用,也就是ThreadLocal被回收之后, 在下一次
 
 
 ![1541052831366](/home/justinniu/MarkDown/notebook/1541052831366.png)
-
