@@ -1,16 +1,18 @@
-Redis 数据结构
+# Redis 数据结构
 
 ### SDS简单动态字符串
 
+```c
 struct sdshdr {
 
-​	int len;//记录已使用的长度
+	int len;//记录已使用的长度
 
-​	int free;//记录未使用的长度
+	int free;//记录未使用的长度
 
-​	char buf[]//保存字符串
+	char buf[]//保存字符串
 
 }
+```
 
 优点:
 
@@ -104,3 +106,66 @@ typedef struct dictEntry {
 3. ![img](https://upload.wikimedia.org/wikipedia/commons/2/2c/Skip_list_add_element-en.gif)
 
 ![Skip_list_add_element-en](/home/justinniu/download/Skip_list_add_element-en.gif)
+
+### 整数集合
+
+```c
+typedef struct intset {
+
+	uint32_t encoding;//编码格式
+
+	uint32_t length;//长度
+
+	int8_t contents[];//数组
+
+}intset;
+```
+
+1. 如果添加的int大于当前的数组的长度,会进行数组升级,也就是改变编码格式.
+2. 如果发生升级,那么最大的数就在数组尾. 
+3. 通过升级更省内存,也更灵活
+
+### 压缩列表ZipList
+
+1. 如果列表Key只包含少量的列表项,并且每个元素都是小整数或者短的字符串,就会采用压缩表,同样的,当Key和Value 也符合上述条件时,也会用压缩列表实现Hash
+2. 数据结构
+   1. zlbytes 压缩列表的字节长度
+   2. zltail 尾结点的头 的偏移量
+   3. zllen 记录数组的长度
+   4. entry
+3. 结点的数据结构
+   1. previous_entry_length 前一数组的字节长度
+   2. encoding  前几位表示 是数组还是整数后几位代表长度
+   3. content 可以是一个字节数组或者整数
+   4. 可能会出现需要连锁更新的情况
+
+### Redis中的对象
+
+```c
+typedef struct redisObject {
+
+	usigned type; //数据类型
+
+	unsigned encoding; //具体的编码格式
+
+	void *ptr; //指向 存储的内存地址
+
+};
+```
+
+不同类型和编码的对象
+
+| 类型         | 编码                      | 对象                               |
+| ------------ | ------------------------- | ---------------------------------- |
+| redis_string | redis_encoding_int        | 整数字符串                         |
+| redis_string | redis_encoding_embstr     | embstr编码的简单动态字符串         |
+| redis_string | redis_encoding_raw        | 简单动态字符串实现的字符串对象     |
+| redis_list   | redis_encoding_ziplist    | 使用压缩列表实现的列表对象         |
+| redis_list   | redis_encoding_linkedlist | 使用双向链表实现的列表对象         |
+| redis_hash   | redis_encoding_ziplist    | 使用压缩列表实现的哈希对象         |
+| redis_hash   | redis_encoding_ht         | 使用哈希表实现的哈希对象           |
+| redis_set    | redis_encoding_intset     | 使用整数集合实现的集合对象         |
+| redis_set    | redis_encoding_ht         | 使用字典实现的集合对象             |
+| redis_zset   | redis_encoding_ziplist    | 使用跳跃表实现的有序集合对象       |
+| redis_zset   | redis_encoding_skiplist   | 使用跳跃表和字典实现的有序集合对象 |
+
