@@ -196,9 +196,5 @@ public class PuttingIntoPractice{
 
 
 
-1. 
-
-
-
 
 
