@@ -14,11 +14,32 @@ calendar.setTime(date);//给calendar赋值
 int y1 = calendar.get(Calendar.YEAR);//获取年份
 int d1 = calendar.get(Calendar.DAY_OF_YEAR);//获取年中第几天
 calendar2.setTime(date2);
-​
+
 int y2 = calendar2.get(Calendar.YEAR);
 int d2 = calendar2.get(Calendar.DAY_OF_YEAR);
 if (y1 == y2 && d1 == d2)//判断是不是同一年的同一天
     System.out.println(true);
 else
     System.out.println(true);
+```
+
+```java
+/**
+ * 获取 多少小时之前的时间
+ * @param Hour
+ * @return Date
+ */
+public Date getPastDateByHour(int Hour) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(new Date());
+    calendar.add(Calendar.HOUR_OF_DAY, -Hour);
+    return calendar.getTime();
+}
+
+public Date getPastDateByDay(int Day) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(new Date());
+    calendar.add(Calendar.DAY_OF_YEAR, -Day);
+    return calendar.getTime();
+}
 ```
