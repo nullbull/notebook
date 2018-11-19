@@ -235,6 +235,11 @@ typedef struct redisObject {
 6. redis通过 CRC16(key)&16383来计算槽位, CRC(16)是key的校验和;
 7. 集群结点只能使用0号数据库
 
+### 发布订阅模式
+
+1. redisServer 里面有一个 pubsub_channels字典表
+2. 
+
 
 
 

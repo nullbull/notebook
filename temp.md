@@ -1,6 +1,16 @@
 Signed-off-by: niuzhenhao <niuzhenhao@xiaomi.com>
 
+git commit -s
 
+git push origin HEAD:refs/for/v10-beta
+
+git status
+
+git pull --rebase
+
+git reset --hard 
+
+git push origin HEAD:refs/changes/
 
 ### 抢单设计
 
@@ -78,6 +88,40 @@ ThreadLocalMap key是弱引用,也就是ThreadLocal被回收之后, 在下一次
 
 如果使用场景是线程池,如果不remove, get方法能访问到之前set的值.所以在线程池慎用ThreadLocal
 
-
-
 ![1541052831366](/home/justinniu/MarkDown/notebook/1541052831366.png)
+
+查看日志的 命令  cat less more head tail sort ， wc字符统计， grep 查找制定内容
+
+find /home/justinniu/ -name "DimensTool.java" 查找文件
+
+curl 访问网站
+
+sed 和awk 编辑器
+
+uptime 查看 linux的load值
+
+top 查看 Cpu /进程的   Cpu的一些参数
+
+df -h 查看磁盘剩余空间
+
+sar -n DEV 1 1 查看系统的网络状况
+
+iostat -d -k 查看系统的I/O状况
+
+free -m 查看内存使用情况
+
+vmstat 查看虚拟内存的使用情况
+
+qps 每秒查询数
+
+rt 请求的响应时间
+
+java查看命令
+
+jps -l 查看正在运行的java进程号
+
+jstat -gc 进程号 查看当前的一些状态
+
+jmap
+
+btrace
