@@ -1,16 +1,4 @@
-Signed-off-by: niuzhenhao <niuzhenhao@xiaomi.com>
 
-git commit -s
-
-git push origin HEAD:refs/for/v10-beta
-
-git status
-
-git pull --rebase
-
-git reset --hard 
-
-git push origin HEAD:refs/changes/
 
 ### 抢单设计
 
@@ -125,3 +113,29 @@ jstat -gc 进程号 查看当前的一些状态
 jmap
 
 btrace
+
+
+
+
+
+
+
+
+
+- 服务网关 Zuul
+- 服务注册发现 Eureka+Ribbon
+- 认证授权中心 Spring Security OAuth2、JWTToken
+- 服务框架 Spring MVC/Boot
+- 服务容错 Hystrix
+- 分布式锁 Redis
+- 服务调用 Feign
+- 消息队列 Kafka
+- 文件服务 私有云盘
+- 富文本组件 UEditor
+- 定时任务 xxl-job
+- 配置中心 apollo
+
+
+
+
+
