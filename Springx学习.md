@@ -1,26 +1,26 @@
 1. @Primary 提高自动装配Bean的优先级
 2. 在自动装配上面声明
-@Qualifier("xxxx") 指定想要自动匹配的Bean
+     @Qualifier("xxxx") 指定想要自动匹配的Bean
 3. 在想要自动装配的Bean上声明@Component
 4. @ComponentScan("soundSystem") 在一个配置类中只能写一个要不然在Junit测试是就会在@ContextConfiguration(classes = CDplayerConfig.class)报错
 5. xxxxxConfig 貌似不能使用@Autowird 来自动生成bean， 只能显示的@Bean来 
 6. 这么多错误，原来只是少了一个包 需要aspectjrt-1.8.xx.jar 和aspectjweaver.jar
-7.@Rule
-    public final StandardOutputStreamLog log = new StandardOutputStreamLog();
-	这个会把输出记录到日志里
-8. Aop的XML配置
+     7.@Rule
+        public final StandardOutputStreamLog log = new StandardOutputStreamLog();
+       这个会把输出记录到日志里
+7. Aop的XML配置
 
-		    <aop:config>
-		        <aop:pointcut id="performance" expression="execution(* Spring.AOP.Performance.perform(..))">
-		        </aop:pointcut>//定义切点
-		        <aop:aspect ref="audience">
-		            <aop:before pointcut-ref="performance" method="silenceCellPhones"/>
-		            <aop:around method="watchPerformance" pointcut-ref="performance"/>
-		            <aop:before method="takeSeats" pointcut="execution(* Spring.AOP.Performance.perform())"/>
-		            <aop:after-returning method="applause" pointcut="execution(* Spring.AOP.Performance.perform())"/>
-		            <aop:after-throwing method="demandRefund" pointcut="execution(* Spring.AOP.Performance.perform())"/>
-		        </aop:aspect>
-		    </aop:config>
+        <aop:config>
+                <aop:pointcut id="performance" expression="execution(* Spring.AOP.Performance.perform(..))">
+                </aop:pointcut>//定义切点
+                <aop:aspect ref="audience">
+                    <aop:before pointcut-ref="performance" method="silenceCellPhones"/>
+                    <aop:around method="watchPerformance" pointcut-ref="performance"/>
+                    <aop:before method="takeSeats" pointcut="execution(* Spring.AOP.Performance.perform())"/>
+                    <aop:after-returning method="applause" pointcut="execution(* Spring.AOP.Performance.perform())"/>
+                    <aop:after-throwing method="demandRefund" pointcut="execution(* Spring.AOP.Performance.perform())"/>
+                </aop:aspect>
+            </aop:config>
 
 
 10. XML的适用范围：当被调用的Bean不能添加注释的时候
@@ -49,7 +49,7 @@
 			<aop:pointcut id="trackPlayed" expression=
 			"execution(* soundsystem.CompactDisc.playTrack(int))
 			and args(trackNumber)" />
-
+		
 			<aop:before
 			pointcut-ref="trackPlayed"
 			method="countTrack"/>
@@ -85,9 +85,9 @@
 
 由于是多参数那么就不能使用parameterType， 改用#｛index｝是第几个就用第几个的索引，索引从0开始
 方案2（推荐）基于注解
-		
-		public List<XXXBean> getXXXBeanList(@Param("id")String id, @Param("code")String code);  
-		
+​		
+​		public List<XXXBean> getXXXBeanList(@Param("id")String id, @Param("code")String code);  
+​		
 		<select id="getXXXBeanList" resultType="XXBean">
 		
 		　　select t.* from tableName where id = #{id} and name = #{code}  
@@ -97,71 +97,114 @@
 
 
 
-13.         @Component("student")
-			        public class Student {
-			            /**
-			             * 初始化方法
-			             */
-			            @PostConstruct
-			            public void init(){
-			                System.out.println("init");
-			            }
-			            
-			            /**
-			             * 销毁方法
-			             */
-			            @PreDestroy
-			            public void destory(){
-			                System.out.println("destory");
-			            }
-			        }
+13. @Component("student")
+    ​		        public class Student {
+    ​		            /**
+    ​		             * 初始化方法
+    ​		             */
+    ​		            @PostConstruct
+    ​		            public void init(){
+    ​		                System.out.println("init");
+    ​		            }
+    ​		            
+    ​		            /**
+    ​		             * 销毁方法
+    ​		             */
+    ​		            @PreDestroy
+    ​		            public void destory(){
+    ​		                System.out.println("destory");
+    ​		            }
+    ​		        }
+
 14. 获取application.properties的值
- 1. Environment.getProperty()
- 2. @Value("${xx:default}")
- 3. setDefaultProperties()
 
-15. 添加新的配置文件
-	@PropertySource("classpath:application.properties")
-16. 设置前缀读取，直接可以匹配并赋值 @ConfigurationProperties(prefix = "ds") 要设置get和set 方法
+ 15. Environment.getProperty()
 
-17. EnvironmentPostProcessor读取配置文件 需要挺麻烦的配置
-	public class MyEnvironmentPostProcessor implements EnvironmentPostProcessor {
-	    @Override
-	    public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-	        try(InputStream inputStream = new FileInputStream("d:/test/test.properties")) {
-	            Properties properties = new Properties();
-	            properties.load(inputStream);
-	            PropertiesPropertySource propertySource = new PropertiesPropertySource("my", properties);
-	            environment.getPropertySources().addLast(propertySource);
-	        }catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	}
-18. 读取后缀为xx的胚子文件，同时默认的配置文件内容也可以获取         application.setAdditionalProfiles("test");
-同时，也只有设置了    @Profile() 的bean 被读取 默认的也不能被读取
-19. condition
-	1. @ConditionOnProperty
-	2. @ConditionOnClass
-	3. @ConditionOnBean
-20. @Import 可以引入bean， 也可以引入配置类， 还可以是ImportSelector 和 ImportBeanDeifintionRegistor 的子类  原理是ImportSelector， 返回含有类名的String[]数组，然后纳入到bean的管理，而ImportBe'an'DifintionRegistor 直接把bean注册到Spring容器中
-21. @EnableAutoConfiguration 可以引入 外部的包和bean和配置
-22. 
-   1. 定义事件 extends ApplicationEvent
-   2. 定义监听器 extends ApplicationListener
-   3.  1. 添加监听器 addListeners() 
-     2. 可以将监听器纳入到Spring容器管理@Component
-     3. 在配置文件中 添加context.listener.classes= (详细可见DelegatingApplicationListener)
-     4. 不定义监听器 使用 @EventListener，将其纳入到Spring管理
-   4. 发布事件 publishEvent（）
-23. ApplicationContextInitializer 在Spring refresh之前的一个回掉   springApplication.addInitializers();
-24.在resource下创建banner.txt可以在控制台输出
+ 16. @Value("${xx:default}")
 
-25. 查一下SpringBoot的启动方式
-26. 怎么样在SpringMVC中使用Servlet，Filter， Listener
-27. 1. @ServletCompant 
-	2. ServletRegisterBean
-28. 写一个拦截器 继承HandlerInterceptor接口，然后写一个类，继承WebMvcConfigurerAdaptor，重写addInterceptors方法
-29. ErrorPageRegistrar重写错误界面
-30. ExceptionHandler 处理 这个Controller下面的异常
-31. zookeeper， shiro
+ 17. setDefaultProperties()
+
+18. 添加新的配置文件
+    @PropertySource("classpath:application.properties")
+
+19. 设置前缀读取，直接可以匹配并赋值 @ConfigurationProperties(prefix = "ds") 要设置get和set 方法
+
+20. EnvironmentPostProcessor读取配置文件 需要挺麻烦的配置
+    public class MyEnvironmentPostProcessor implements EnvironmentPostProcessor {
+    ​    @Override
+    ​    public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
+    ​        try(InputStream inputStream = new FileInputStream("d:/test/test.properties")) {
+    ​            Properties properties = new Properties();
+    ​            properties.load(inputStream);
+    ​            PropertiesPropertySource propertySource = new PropertiesPropertySource("my", properties);
+    ​            environment.getPropertySources().addLast(propertySource);
+    ​        }catch (IOException e) {
+    ​            e.printStackTrace();
+    ​        }
+    ​    }
+    }
+
+21. 读取后缀为xx的胚子文件，同时默认的配置文件内容也可以获取         application.setAdditionalProfiles("test");
+    同时，也只有设置了    @Profile() 的bean 被读取 默认的也不能被读取
+
+22. condition
+    1. @ConditionOnProperty
+    2. @ConditionOnClass
+    3. @ConditionOnBean
+
+23. @Import 可以引入bean， 也可以引入配置类， 还可以是ImportSelector 和 ImportBeanDeifintionRegistor 的子类  原理是ImportSelector， 返回含有类名的String[]数组，然后纳入到bean的管理，而ImportBe'an'DifintionRegistor 直接把bean注册到Spring容器中
+
+24. @EnableAutoConfiguration 可以引入 外部的包和bean和配置
+
+25. 
+
+   26. 定义事件 extends ApplicationEvent
+
+   27. 定义监听器 extends ApplicationListener
+
+   28. 1. 添加监听器 addListeners() 
+            2. 可以将监听器纳入到Spring容器管理@Component
+            3. 在配置文件中 添加context.listener.classes= (详细可见DelegatingApplicationListener)
+            4. 不定义监听器 使用 @EventListener，将其纳入到Spring管理
+
+   29. 发布事件 publishEvent（）
+
+30. ApplicationContextInitializer 在Spring refresh之前的一个回掉   springApplication.addInitializers();
+    24.在resource下创建banner.txt可以在控制台输出
+
+31. 查一下SpringBoot的启动方式
+
+32. 怎么样在SpringMVC中使用Servlet，Filter， Listener
+
+33. 1. @ServletCompant 
+    2. ServletRegisterBean
+
+34. 写一个拦截器 继承HandlerInterceptor接口，然后写一个类，继承WebMvcConfigurerAdaptor，重写addInterceptors方法
+
+35. ErrorPageRegistrar重写错误界面
+
+36. ExceptionHandler 处理 这个Controller下面的异常
+
+37. zookeeper， shiro
+
+    ### 国际化
+
+1. Locale locale = new Loacle("zh", "cn");
+
+2. MessageFormat，可以使用占位符
+
+   ```java
+   String p = "At {1, time, short} On {1, date, long}, {0} paid {2, number, currency}";
+   Object[] params = {"niu", new GregorianCalendar().getTime(), 2};
+   MessageFormat mf = new MessageFormat(p, Locale.CHINA);
+   String ms = mf.format(params);
+   System.out.println(ms);
+   ```
+
+3. ResourceBundle rb = ResourceBundle.getBundle("", locale);
+
+   通过这种方式来实现指定资源文件的配置。
+
+4. 可以通过注解来实现多个不同的@Transactional
+
+​	

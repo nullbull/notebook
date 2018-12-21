@@ -23,7 +23,7 @@
 15.  ConcurrenthashMap用到了哪些锁
 16.  ArrayList和LinkedList的区别，分别在什么场景下使用
 17.  ArrayList的扩容
-     1.  负载因子是0.75也就是arraylist的size > length * 0.75便进行扩容
+     1.  负载因子是1也就是arraylist的size > length 便进行扩容
      2.  初始容量是10，扩容为之前的1.5倍
      3.  add 和  remove 都是用的System.arrayCopy;
 18.  Vector为什么是线程安全的
@@ -54,7 +54,7 @@
 2. [自旋锁，偏向锁，轻量级锁，重量级锁的介绍以及升级过程]()
 3. volatile 底层实现
 4. CAS乐观锁的原理
-5. ASQ 的原理
+5. AQS 的原理
 6. CountDownLanch 和 CyclicBarrier 的区别和用法
 7. [线程池的使用和相关参数](https://blog.csdn.net/pfnie/article/details/52757002)
    1. corePoolSize核心线程池大小

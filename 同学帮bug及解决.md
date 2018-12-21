@@ -61,3 +61,23 @@
 8. mybatis 没使用 驼峰命名法
 
 9. 阿里云开放端口，使用外部连接之后，在linux本机就没法使用producer生产消息了
+
+10. 使用阿里云的RabbitMq，需要声明vhost，如果vhost不对，会出现启动rabbitmq报错 java.net.SocketException: Connection reset，[类似](https://blog.csdn.net/wabiaozia/article/details/53791366)  配置如下
+
+    ```xml
+    rabbitmq:
+      addresses: 59.110.137.45:5672
+      username: justinniu
+      password: n1996z11h2
+      virtual-host: /zwt
+    ```
+
+    需要去localhost:15672 控制面板声明一个vhost，本机就用‘/’，不是本机就得声明一个
+
+11. yml配置文件的自定义字段的名字不能和系统中的冲突，避免使用spring或者一些其他配件的关键词，比如rabbitmq改为rabbitMQ，要不然会报错
+
+    ```
+    org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'methodValidationPostProcessor' defined in class path resource [org/springframework/boot/autoconfigure/validation/ValidationAutoConfiguration.class]:
+    
+    
+    ```
