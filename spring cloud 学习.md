@@ -10,3 +10,4 @@ spring:
 ```
 
 3. Hystrix class 类要加上@Compant 配置
+4. @RefreshScope spring cloud bus 刷新配置，使用时要加上这个注解，值才会被刷新

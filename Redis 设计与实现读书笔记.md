@@ -238,11 +238,4 @@ typedef struct redisObject {
 ### 发布订阅模式
 
 1. redisServer 里面有一个 pubsub_channels字典表
-2. 
-
-
-
-
-
-
 
